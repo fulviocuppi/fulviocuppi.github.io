@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fulvio Cuppi | Data Analyst Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .skill-check {
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+        .skill-check.animate {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl font-bold text-gray-800">Fulvio Cuppi</h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="text-gray-600 hover:text-blue-600 transition">Home</a>
+                    <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About</a>
+                    <a href="#experience" class="text-gray-600 hover:text-blue-600 transition">Experience</a>
+                    <a href="#skills" class="text-gray-600 hover:text-blue-600 transition">Skills</a>
+                    <a href="#thesis" class="text-gray-600 hover:text-blue-600 transition">Tesi</a>
+                    <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden">
+                    <i class="fas fa-bars text-gray-600"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-white z-40 transform -translate-x-full transition-transform duration-300 md:hidden">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <a href="#home" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Home</a>
+            <a href="#about" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">About</a>
+            <a href="#experience" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Experience</a>
+            <a href="#skills" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Skills</a>
+            <a href="#thesis" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Tesi</a>
+            <a href="#contact" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg min-h-screen flex items-center justify-center text-white">
+        <div class="max-w-6xl mx-auto px-4 py-20">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="lg:w-1/2 text-center lg:text-left mb-10 lg:mb-0">
+                    <h1 class="text-5xl lg:text-6xl font-bold mb-4 fade-in">
+                        Fulvio Cuppi
+                    </h1>
+                    <h2 class="text-2xl lg:text-3xl mb-6 text-blue-200 fade-in">
+                        Data Analyst & Cultural Expert
+                    </h2>
+                    <p class="text-lg mb-8 text-gray-100 fade-in">
+                        Trasformo dati in insights significativi, combinando competenze analitiche con una solida formazione culturale e artistica.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-in">
+                        <a href="#contact" class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
+                            Contattami
+                        </a>
+                        <a href="#thesis" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition">
+                            Vedi Tesi
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <img src="2025-07-28 14.37.32.jpg" alt="Fulvio Cuppi" class="w-80 h-80 rounded-full object-cover border-8 border-white/20 shadow-2xl fade-in">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 fade-in">Chi Sono</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto fade-in">
+                    Un professionista versatile con una formazione unica che combina arte, tecnologia e analisi dati
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold mb-6">Il Mio Percorso</h3>
+                    <p class="text-gray-600 mb-4">
+                        Laureato magistrale in Arti con specializzazione in Museologia e Curatela, ho sviluppato una passione per l'analisi dei dati durante la stesura della mia tesi, utilizzando i dati come strumento per interpretare fenomeni culturali.
+                    </p>
+                    <p class="text-gray-600 mb-4">
+                        La mia formazione accademica mi ha fornito solide basi in storia dell'arte, linguaggi visivi e tecniche di produzione artistica e cinematografica. Ho anche sviluppato competenze nella produzione di musica elettronica.
+                    </p>
+                    <p class="text-gray-600">
+                        Attualmente sto approfondendo le mie competenze in Data Analytics attraverso corsi specializzati e progetti pratici, combinando creatività e analisi per creare soluzioni innovative.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6 fade-in">
+                    <div class="bg-blue-50 p-6 rounded-lg text-center card-hover">
+                        <i class="fas fa-graduation-cap text-3xl text-blue-600 mb-4"></i>
+                        <h4 class="font-bold mb-2">Formazione</h4>
+                        <p class="text-sm text-gray-600">Master in Arti + Bachelor in Arti Visive</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg text-center card-hover">
+                        <i class="fas fa-chart-bar text-3xl text-green-600 mb-4"></i>
+                        <h4 class="font-bold mb-2">Data Analytics</h4>
+                        <p class="text-sm text-gray-600">Boolean Academy</p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg text-center card-hover">
+                        <i class="fas fa-music text-3xl text-purple-600 mb-4"></i>
+                        <h4 class="font-bold mb-2">Sound Engineer</h4>
+                        <p class="text-sm text-gray-600">Fonoprint</p>
+                    </div>
+                    <div class="bg-orange-50 p-6 rounded-lg text-center card-hover">
+                        <i class="fas fa-mountain text-3xl text-orange-600 mb-4"></i>
+                        <h4 class="font-bold mb-2">Nature Guide</h4>
+                        <p class="text-sm text-gray-600">GAE Licensed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 fade-in">Esperienza</h2>
+                <p class="text-gray-600 fade-in">Il mio percorso professionale nel mondo culturale e dell'analisi dati</p>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-blue-200"></div>
+
+                <!-- Experience items -->
+                <div class="space-y-12">
+                    <!-- Data Analytics Course -->
+                    <div class="flex flex-col lg:flex-row items-center fade-in">
+                        <div class="lg:w-1/2 lg:pr-8 mb-4 lg:mb-0">
+                            <div class="bg-white p-6 rounded-lg shadow-lg card-hover">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-blue-600 text-white p-2 rounded-full mr-4">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold">Data Analytics Course</h3>
+                                        <p class="text-gray-600">Boolean Academy</p>
+                                        <p class="text-sm text-blue-600">2024 - In corso</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600">
+                                    Corso intensivo in Data Analytics con focus su Python, SQL, PowerBI e Tableau per l'analisi e visualizzazione dei dati.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2 lg:pl-8">
+                            <div class="w-4 h-4 bg-blue-600 rounded-full mx-auto lg:mx-0"></div>
+                        </div>
+                    </div>
+
+                    <!-- Museum Guide MAST -->
+                    <div class="flex flex-col lg:flex-row-reverse items-center fade-in">
+                        <div class="lg:w-1/2 lg:pl-8 mb-4 lg:mb-0">
+                            <div class="bg-white p-6 rounded-lg shadow-lg card-hover">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-purple-600 text-white p-2 rounded-full mr-4">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold">Museum Tour Guide</h3>
+                                        <p class="text-gray-600">Fondazione MAST</p>
+                                        <p class="text-sm text-purple-600">10/2023 - 12/2023</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600">
+                                    Guida per l'esibizione "Foto/Industria 23 GAME", biennale di fotografia. Supporto educativo e interpretativo per i visitatori.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2 lg:pr-8">
+                            <div class="w-4 h-4 bg-purple-600 rounded-full mx-auto lg:mx-0"></div>
+                        </div>
+                    </div>
+
+                    <!-- Museum Guide Palazzo -->
+                    <div class="flex flex-col lg:flex-row items-center fade-in">
+                        <div class="lg:w-1/2 lg:pr-8 mb-4 lg:mb-0">
+                            <div class="bg-white p-6 rounded-lg shadow-lg card-hover">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-green-600 text-white p-2 rounded-full mr-4">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold">Museum Tour Guide</h3>
+                                        <p class="text-gray-600">Palazzo D'Accursio</p>
+                                        <p class="text-sm text-green-600">11/2022 - 02/2023</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600">
+                                    Guida per l'esibizione "Norma Mascellani (1909–2009). Secrets from the Twentieth Century". Collaborazione con team curatoriale.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2 lg:pl-8">
+                            <div class="w-4 h-4 bg-green-600 rounded-full mx-auto lg:mx-0"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 fade-in">Competenze</h2>
+                <p class="text-gray-600 fade-in">Le mie competenze tecniche e linguistiche</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Technical Skills -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold mb-8 text-center">Competenze Tecniche</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
+                            <div class="flex items-center">
+                                <i class="fab fa-python text-2xl text-blue-600 mr-4"></i>
+                                <span class="font-semibold text-lg">Python</span>
+                            </div>
+                            <div class="skill-check">
+                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
+                            <div class="flex items-center">
+                                <i class="fas fa-database text-2xl text-orange-600 mr-4"></i>
+                                <span class="font-semibold text-lg">SQL</span>
+                            </div>
+                            <div class="skill-check">
+                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-excel text-2xl text-green-600 mr-4"></i>
+                                <span class="font-semibold text-lg">Excel</span>
+                            </div>
+                            <div class="skill-check">
+                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-bar text-2xl text-blue-500 mr-4"></i>
+                                <span class="font-semibold text-lg">Tableau</span>
+                            </div>
+                            <div class="skill-check">
+                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-line text-2xl text-yellow-600 mr-4"></i>
+                                <span class="font-semibold text-lg">PowerBI</span>
+                            </div>
+                            <div class="skill-check">
+                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
+                            <div class="flex items-center">
+                                <i class="fas fa-palette text-2xl text-purple-600 mr-4"></i>
+                                <span class="font-semibold text-lg">Adobe Creative Suite</span>
+                            </div>
+                            <div class="skill-check">
+                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold mb-8 text-center">Lingue</h3>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-6 rounded-lg text-center card-hover">
+                            <i class="fas fa-flag text-3xl text-blue-600 mb-4"></i>
+                            <h4 class="font-bold mb-2">Italiano</h4>
+                            <p class="text-sm text-gray-600">Madrelingua</p>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-lg text-center card-hover">
+                            <i class="fas fa-flag text-3xl text-red-600 mb-4"></i>
+                            <h4 class="font-bold mb-2">Inglese</h4>
+                            <p class="text-sm text-gray-600">Fluente</p>
+                        </div>
+                        <div class="bg-blue-50 p-6 rounded-lg text-center card-hover">
+                            <i class="fas fa-flag text-3xl text-blue-600 mb-4"></i>
+                            <h4 class="font-bold mb-2">Francese</h4>
+                            <p class="text-sm text-gray-600">Avanzato</p>
+                        </div>
+                        <div class="bg-yellow-50 p-6 rounded-lg text-center card-hover">
+                            <i class="fas fa-flag text-3xl text-yellow-600 mb-4"></i>
+                            <h4 class="font-bold mb-2">Spagnolo</h4>
+                            <p class="text-sm text-gray-600">Avanzato</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Thesis Section -->
+    <section id="thesis" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 fade-in">La Mia Tesi</h2>
+                <p class="text-gray-600 fade-in">Ricerca sui mercati di arte digitale NFT</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden card-hover fade-in">
+                    <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-8 text-white">
+                        <div class="flex items-center justify-center mb-6">
+                            <i class="fas fa-coins text-6xl"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-center mb-4">
+                            The Rise of The NFT Marketplace: SuperRare and Foundation
+                        </h3>
+                        <p class="text-center text-blue-100 text-lg">
+                            Una mappatura completa di due mercati di arte digitale
+                        </p>
+                    </div>
+
+                    <div class="p-8">
+                        <div class="grid md:grid-cols-2 gap-8 mb-8">
+                            <div>
+                                <h4 class="text-xl font-bold mb-4 text-gray-800">Obiettivi della Ricerca</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        Analisi comparativa dei marketplace SuperRare e Foundation
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        Studio dei pattern di vendita e pricing degli NFT
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        Mappatura degli artisti e delle tendenze emergenti
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        Impatto culturale dell'arte digitale nel mercato contemporaneo
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 class="text-xl font-bold mb-4 text-gray-800">Metodologia</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-link text-blue-600 mr-2 mt-1"></i>
+                                        Estrazione dei dati dalla blockchain
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-chart-bar text-blue-600 mr-2 mt-1"></i>
+                                        Analisi quantitativa dei dati di vendita
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-search text-blue-600 mr-2 mt-1"></i>
+                                        Ricerca qualitativa sui trend artistici
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-users text-blue-600 mr-2 mt-1"></i>
+                                        Studio del comportamento dei collezionisti
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-sitemap text-blue-600 mr-2 mt-1"></i>
+                                        Mappatura dei marketplaces
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-6 rounded-lg mb-8">
+                            <h4 class="text-xl font-bold mb-3 text-gray-800">Risultati Chiave</h4>
+                            <p class="text-gray-600 mb-4">
+                                La ricerca ha evidenziato come i marketplace NFT abbiano rivoluzionato il mercato dell'arte contemporanea, 
+                                creando nuove dinamiche di valore e accessibilità per artisti digitali emergenti. L'analisi dei dati ha 
+                                rivelato pattern interessanti nelle preferenze dei collezionisti e nell'evoluzione dei prezzi.
+                            </p>
+                            <p class="text-gray-600">
+                                Questo studio rappresenta un ponte perfetto tra la mia formazione artistica e le competenze in data analytics, 
+                                dimostrando come l'analisi dei dati possa fornire insights preziosi nel settore culturale.
+                            </p>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="https://www.academia.edu/98737937/The_Rise_of_The_NFT_Marketplace_SuperRare_and_Foundation" 
+                               target="_blank" 
+                               class="inline-flex items-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                Leggi la Tesi Completa su Academia.edu
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 fade-in">Contatti</h2>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold mb-8">Informazioni di Contatto</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Telefono</h4>
+                                <a href="tel:+393451062698" class="text-green-600 hover:text-green-800 transition">+39 345 106 2698</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-purple-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Località</h4>
+                                <p class="text-gray-600">Bologna, Italia</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h4 class="font-semibold mb-4">Seguimi sui Social</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://www.linkedin.com/in/fulvio-cuppi-7835b0352/" 
+                               target="_blank"
+                               class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition transform hover:scale-110">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://www.instagram.com/fulvio_cuppi/" 
+                               target="_blank"
+                               class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-full hover:from-purple-600 hover:to-pink-600 transition transform hover:scale-110">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="fade-in">
+                    <form id="contact-form" action="mailto:fulviocuppi@gmail.com" method="post" enctype="text/plain" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Nome</label>
+                            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Email</label>
+                            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Oggetto</label>
+                            <input type="text" name="oggetto" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Messaggio</label>
+                            <textarea name="messaggio" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105">
+                            Invia Messaggio
+                        </button>
+                    </form>
+
+                    <!-- Alternative contact methods -->
+                    <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                        <p class="text-sm text-gray-600 text-center">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Oppure contattami direttamente via 
+                            <a href="/cdn-cgi/l/email-protection#caacbfa6bca3a5a9bfbabaa38aada7aba3a6e4a9a5a7" class="text-blue-600 hover:text-blue-800 font-semibold">email</a> 
+                            o 
+                            <a href="https://www.linkedin.com/in/fulvio-cuppi-7835b0352/" target="_blank" class="text-blue-600 hover:text-blue-800 font-semibold">LinkedIn</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2024 Fulvio Cuppi. Tutti i diritti riservati.</p>
+            <p class="text-gray-400 mt-2">Data Analyst | Cultural Expert | Bologna, Italia</p>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('-translate-x-full');
+        });
+
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('-translate-x-full');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Skill checks animation
+        const skillChecks = document.querySelectorAll('.skill-check');
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, index * 200);
+                }
+            });
+        }, observerOptions);
+
+        skillChecks.forEach(check => {
+            skillObserver.observe(check);
+        });
+
+        // Enhanced form handling
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const nome = formData.get('nome');
+            const email = formData.get('email');
+            const oggetto = formData.get('oggetto');
+            const messaggio = formData.get('messaggio');
+
+            // Create mailto link with form data
+            const subject = encodeURIComponent(`Portfolio Contact: ${oggetto}`);
+            const body = encodeURIComponent(`Nome: ${nome}
+Email: ${email}
+
+Messaggio:
+${messaggio}`);
+            const mailtoLink = `mailto:fulviocuppi@gmail.com?subject=${subject}&body=${body}`;
+
+            // Open email client
+            window.location.href = mailtoLink;
+
+            // Show success message
+            alert('Il tuo client email si aprirà per inviare il messaggio. Grazie per il contatto!');
+
+            // Reset form
+            this.reset();
+        });
+
+        // Add interactive hover effects
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
