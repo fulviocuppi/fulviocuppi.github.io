@@ -1,669 +1,697 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fulvio Cuppi | Data Analyst Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .skill-check {
-            transform: scale(0);
-            transition: transform 0.3s ease;
-        }
-        .skill-check.animate {
-            transform: scale(1);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fulvio Cuppi — AI & Data Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET ───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+img{display:block}
+ul{list-style:none}
+a{text-decoration:none}
+button{border:none;cursor:pointer;background:none}
+
+/* ─── TOKENS ──────────────────────────────────────────── */
+:root{
+  --bg:          #0B0F19;
+  --surface:     #0F1520;
+  --hover:       #131b2a;
+  --cyan:        #00D4FF;
+  --cyan-b:      rgba(0,212,255,0.25);
+  --violet:      #7C3AED;
+  --lime:        #A3FF12;
+  --text:        #E5E7EB;
+  --muted:       #9CA3AF;
+  --border:      rgba(255,255,255,0.065);
+  --fdisp:       'Inter','Arial',sans-serif;
+  --fbody:       'IBM Plex Sans',sans-serif;
+  --fmono:       'IBM Plex Mono',monospace;
+}
+
+/* ─── BASE ────────────────────────────────────────────── */
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--fbody);line-height:1.6;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,0.022) 1px,transparent 1px);
+  background-size:72px 72px;
+}
+
+/* ─── REVEAL ──────────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.07s}.d2{transition-delay:.14s}
+.d3{transition-delay:.21s}.d4{transition-delay:.28s}
+
+/* ─── NAV ─────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:200;
+  padding:24px 0;
+  transition:padding .4s,background .4s,border-color .4s;
+  border-bottom:1px solid transparent;
+}
+nav.stuck{
+  padding:13px 0;
+  background:rgba(11,15,25,0.93);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom-color:var(--border);
+}
+.nw{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;justify-content:space-between;align-items:center}
+.nlogo{font-family:var(--fmono);font-size:13px;letter-spacing:.1em;color:var(--text);font-weight:500}
+.nlogo em{font-style:normal;color:var(--cyan)}
+.nlinks{display:flex;gap:38px}
+.nlinks a{font-family:var(--fmono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nlinks a:hover{color:var(--cyan)}
+.nbtn{display:none;flex-direction:column;gap:5px;padding:4px}
+.nbtn span{display:block;width:22px;height:1.5px;background:var(--muted);transition:transform .3s,opacity .3s}
+
+/* mobile drawer — opacity transition (no display-none flash) */
+.drawer{
+  position:fixed;inset:0;z-index:190;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.drawer.open{opacity:1;pointer-events:auto}
+.drawer a{font-family:var(--fdisp);font-size:28px;font-weight:700;color:var(--text);transition:color .2s}
+.drawer a:hover{color:var(--cyan)}
+
+/* ─── LAYOUT HELPERS ──────────────────────────────────── */
+section{position:relative;z-index:1}
+.w{max-width:1200px;margin:0 auto;padding:0 48px}
+.sh{display:flex;align-items:baseline;gap:16px;margin-bottom:62px}
+.sn{
+  font-family:var(--fmono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--cyan);padding:3px 10px;border:1px solid var(--cyan-b);border-radius:2px;
+}
+.st{font-family:var(--fdisp);font-weight:700;font-size:clamp(26px,2.8vw,36px);letter-spacing:-.025em;color:var(--text)}
+
+/* ─── HERO ────────────────────────────────────────────── */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:128px 0 100px;overflow:hidden}
+.hbg{
+  position:absolute;right:-30px;top:50%;transform:translateY(-50%);
+  font-family:var(--fdisp);font-weight:800;font-size:clamp(200px,26vw,360px);
+  line-height:1;color:transparent;
+  -webkit-text-stroke:1px rgba(0,212,255,0.042);
+  pointer-events:none;user-select:none;letter-spacing:-.04em;
+}
+@keyframes hup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.a1{opacity:0;animation:hup .8s ease .12s forwards}
+.a2{opacity:0;animation:hup .8s ease .26s forwards}
+.a3{opacity:0;animation:hup .8s ease .4s forwards}
+.a4{opacity:0;animation:hup .8s ease .54s forwards}
+.a5{opacity:0;animation:hup .8s ease .68s forwards}
+
+.hgrid{display:grid;grid-template-columns:1fr 260px;gap:80px;align-items:center}
+.hcol{}
+.hey{
+  font-family:var(--fmono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--cyan);display:inline-flex;align-items:center;gap:12px;margin-bottom:22px;
+}
+.hey::before{content:'';display:block;width:26px;height:1px;background:var(--cyan)}
+.hname{
+  font-family:var(--fdisp);font-weight:800;
+  font-size:clamp(56px,8.5vw,102px);
+  line-height:.92;letter-spacing:-.035em;color:var(--text);margin-bottom:38px;
+}
+.hstmt{
+  max-width:520px;font-size:clamp(15px,1.5vw,17.5px);
+  font-weight:300;line-height:1.72;color:var(--muted);margin-bottom:44px;
+}
+.hstmt strong{color:var(--text);font-weight:500}
+.hdiv{border:none;border-top:1px solid var(--border);margin-bottom:26px;max-width:600px}
+.hstack{font-family:var(--fmono);font-size:11px;letter-spacing:.09em;color:var(--muted);max-width:600px;line-height:2}
+.hstack .lbl{color:var(--cyan);margin-right:8px}
+
+/* photo */
+.hphoto-wrap{position:relative}
+.hphoto-wrap::after{
+  content:'';position:absolute;
+  bottom:-10px;left:-10px;right:10px;top:10px;
+  border:1px solid rgba(0,212,255,0.42);border-radius:4px;z-index:-1;pointer-events:none;
+}
+.hphoto{
+  width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;
+  border-radius:4px;border:1px solid rgba(0,212,255,0.18);
+  display:block;
+  transition:filter .4s;
+}
+.hphoto-wrap:hover .hphoto{filter:brightness(1.05)}
+
+/* ─── WORK ────────────────────────────────────────────── */
+#work{padding:128px 0}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  padding:48px;display:flex;flex-direction:column;
+  transition:border-color .35s,background .35s,transform .35s,box-shadow .35s;
+}
+.card:hover{
+  border-color:var(--cyan-b);background:var(--hover);
+  transform:translateY(-5px);box-shadow:0 28px 52px rgba(0,212,255,0.05);
+}
+.cmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.ctype{
+  font-family:var(--fmono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cyan);padding:5px 11px;border:1px solid var(--cyan-b);border-radius:2px;
+}
+.cyr{font-family:var(--fmono);font-size:11px;color:var(--muted)}
+.ctitle{font-family:var(--fdisp);font-weight:700;font-size:clamp(20px,2.2vw,27px);letter-spacing:-.022em;color:var(--text);margin-bottom:9px;line-height:1.1}
+.csub{font-size:13px;font-style:italic;font-weight:300;color:var(--muted);margin-bottom:28px;line-height:1.55}
+.cdiv{width:26px;height:1px;background:var(--cyan);margin-bottom:26px;transition:width .35s}
+.card:hover .cdiv{width:52px}
+.cfocus{display:flex;flex-direction:column;gap:14px;margin-bottom:32px;flex:1}
+.cfocus li{display:flex;align-items:flex-start;gap:12px;font-size:13.5px;color:var(--muted);line-height:1.6}
+.cfocus li::before{content:'→';font-family:var(--fmono);font-size:11px;color:var(--cyan);flex-shrink:0;margin-top:3px}
+
+/* video embed */
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:3px;margin-top:8px;margin-bottom:28px;border:1px solid var(--border)}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.media-label{font-family:var(--fmono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:block}
+
+/* image grid */
+.igrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:28px;margin-top:8px}
+.igrid img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:3px;border:1px solid var(--border);display:block;transition:opacity .3s}
+.igrid img:hover{opacity:.85}
+
+/* tags */
+.ctags{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
+.tag{font-family:var(--fmono);font-size:10px;letter-spacing:.06em;color:var(--muted);padding:4px 10px;background:rgba(255,255,255,0.038);border-radius:2px}
+
+/* ─── CAPABILITIES ─────────────────────────────────────── */
+#capabilities{padding:120px 0;border-top:1px solid var(--border)}
+.capgrid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.capitem{
+  padding:50px;border:1px solid var(--border);
+  margin:-1px 0 0 -1px;transition:background .3s;
+  position:relative;
+}
+.capitem::before{
+  content:'';position:absolute;inset:-1px;
+  border:1px solid var(--cyan-b);border-radius:1px;
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.capitem:hover{background:var(--surface)}
+.capitem:hover::before{opacity:1}
+.capn{font-family:var(--fmono);font-size:11px;letter-spacing:.14em;color:var(--violet);display:block;margin-bottom:16px}
+.capname{font-family:var(--fdisp);font-weight:700;font-size:clamp(16px,1.7vw,20px);letter-spacing:-.015em;color:var(--text);margin-bottom:13px;line-height:1.2}
+.capdesc{font-size:13.5px;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* ─── BACKGROUND ──────────────────────────────────────── */
+#background{padding:120px 0;border-top:1px solid var(--border)}
+.bglayout{display:grid;grid-template-columns:280px 1fr;gap:80px;align-items:start}
+.bgsticky{position:sticky;top:110px}
+.bgctitle{font-family:var(--fdisp);font-size:16px;font-weight:600;color:var(--text);margin-bottom:14px}
+.bgcp{font-size:13.5px;color:var(--muted);line-height:1.7;font-weight:300}
+.bgcp+.bgcp{margin-top:11px}
+.bgedu{margin-top:32px;padding-top:26px;border-top:1px solid var(--border)}
+.edulbl{font-family:var(--fmono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;display:block}
+.edurow{margin-bottom:13px}
+.edudeg{font-size:13px;font-weight:500;color:var(--text)}
+.eduinst{font-family:var(--fmono);font-size:11px;letter-spacing:.05em;color:var(--muted);margin-top:2px}
+
+/* layer-based experience */
+.layers{}
+.layer{margin-bottom:12px}
+.layer-head{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 0 12px;margin-bottom:2px;
+  border-bottom:1px solid var(--border);
+}
+.layer-lbl{
+  font-family:var(--fmono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding:3px 10px;border-radius:2px;border:1px solid;
+}
+.lbl-research{color:var(--violet);border-color:rgba(124,58,237,.3)}
+.lbl-eng{color:var(--cyan);border-color:var(--cyan-b)}
+.lbl-culture{color:var(--lime);border-color:rgba(163,255,18,.3)}
+.layer-line{flex:1;height:1px;background:var(--border)}
+
+/* exp items */
+.expitem{
+  padding:26px 0;border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:start;
+  transition:padding-left .3s;
+}
+.expitem:hover{padding-left:8px}
+.expdate{font-family:var(--fmono);font-size:11px;letter-spacing:.06em;color:var(--muted);padding-top:3px;line-height:1.5}
+
+/* featured CINECA HPC item */
+.expitem.feat{
+  background:rgba(124,58,237,0.04);
+  border:1px solid rgba(124,58,237,0.18);
+  border-radius:4px;padding:28px;
+  margin-bottom:0;grid-template-columns:120px 1fr;
+  transition:background .3s,border-color .3s,padding-left .3s;
+}
+.expitem.feat:hover{background:rgba(124,58,237,0.07);border-color:rgba(124,58,237,.3);padding-left:28px}
+.exporg{font-family:var(--fdisp);font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
+.exprole{font-family:var(--fmono);font-size:11px;letter-spacing:.06em;color:var(--cyan);margin-bottom:10px}
+.exprole.vio{color:var(--violet)}
+.expdesc{font-size:13px;color:var(--muted);line-height:1.65;font-weight:300}
+.expdesc li{display:flex;align-items:flex-start;gap:10px;margin-bottom:7px}
+.expdesc li::before{content:'→';font-family:var(--fmono);font-size:10px;color:var(--violet);flex-shrink:0;margin-top:3px}
+.exphpc{
+  display:inline-block;font-family:var(--fmono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--violet);border:1px solid rgba(124,58,237,.35);
+  padding:3px 9px;border-radius:2px;margin-bottom:10px;
+}
+
+/* ─── CONTACTS ─────────────────────────────────────────── */
+#contact{padding:120px 0 100px;border-top:1px solid var(--border)}
+.ctgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.ctleft{}
+.ctleft p{font-size:14px;font-weight:300;color:var(--muted);line-height:1.7;margin-top:16px}
+.ctleft strong{color:var(--text);font-weight:500}
+.ctlinks{display:flex;flex-direction:column;gap:14px}
+.clink{
+  display:flex;align-items:center;gap:18px;
+  padding:22px 26px;background:var(--surface);
+  border:1px solid var(--border);border-radius:4px;
+  transition:border-color .3s,background .3s,transform .3s;
+  position:relative;overflow:hidden;
+}
+.clink::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--cyan);transform:scaleY(0);transform-origin:bottom;transition:transform .3s ease;
+}
+.clink:hover{border-color:var(--cyan-b);background:var(--hover);transform:translateX(6px)}
+.clink:hover::after{transform:scaleY(1)}
+.clicon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:3px;flex-shrink:0}
+.clicon svg{width:15px;height:15px;fill:var(--cyan)}
+.cllbl{font-family:var(--fmono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px}
+.clval{font-family:var(--fdisp);font-size:14px;font-weight:600;color:var(--text)}
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-index:1}
+.fw{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;justify-content:space-between;align-items:center}
+.fcopy,.ftag{font-family:var(--fmono);font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.fdot{color:var(--cyan);margin:0 6px}
+
+/* ─── RESPONSIVE ────────────────────────────────────────── */
+@media(max-width:960px){
+  .nlinks{display:none}.nbtn{display:flex}
+  .w,.nw,.fw{padding:0 24px}
+  .hbg{display:none}
+  .hgrid{grid-template-columns:1fr;gap:40px}
+  .hphoto-wrap{max-width:140px;order:-1}
+  .pgrid{grid-template-columns:1fr}
+  .capgrid{grid-template-columns:1fr}
+  .bglayout{grid-template-columns:1fr;gap:44px}
+  .bgsticky{position:static}
+  .ctgrid{grid-template-columns:1fr;gap:44px}
+  #work,#capabilities,#background,#contact{padding:80px 0}
+  .sh{margin-bottom:40px}
+  .card{padding:32px}
+  .capitem{padding:36px}
+  .fw{flex-direction:column;gap:6px;text-align:center}
+}
+@media(max-width:480px){
+  .hname{font-size:clamp(46px,13vw,68px)}
+  .expitem,.expitem.feat{grid-template-columns:1fr;gap:6px}
+  .expdate{padding-top:0}
+}
+</style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
-        <div class="max-w-6xl mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <h1 class="text-xl font-bold text-gray-800">Fulvio Cuppi</h1>
-                <div class="hidden md:flex space-x-6">
-                    <a href="#home" class="text-gray-600 hover:text-blue-600 transition">Home</a>
-                    <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About</a>
-                    <a href="#experience" class="text-gray-600 hover:text-blue-600 transition">Experience</a>
-                    <a href="#skills" class="text-gray-600 hover:text-blue-600 transition">Skills</a>
-                    <a href="#thesis" class="text-gray-600 hover:text-blue-600 transition">Tesi</a>
-                    <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Contact</a>
-                </div>
-                <button id="mobile-menu-btn" class="md:hidden">
-                    <i class="fas fa-bars text-gray-600"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
+<!-- NAV -->
+<nav id="nav">
+  <div class="nw">
+    <a href="#hero" class="nlogo">Fulvio <em>Cuppi</em></a>
+    <ul class="nlinks" id="nlist">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#background">Background</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nbtn" id="nbtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="drawer" id="drawer">
+  <a href="#work"         class="dl">Work</a>
+  <a href="#capabilities" class="dl">Capabilities</a>
+  <a href="#background"   class="dl">Background</a>
+  <a href="#contact"      class="dl">Contact</a>
+</div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-white z-40 transform -translate-x-full transition-transform duration-300 md:hidden">
-        <div class="flex flex-col items-center justify-center h-full space-y-8">
-            <a href="#home" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Home</a>
-            <a href="#about" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">About</a>
-            <a href="#experience" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Experience</a>
-            <a href="#skills" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Skills</a>
-            <a href="#thesis" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Tesi</a>
-            <a href="#contact" class="text-2xl text-gray-600 hover:text-blue-600 transition mobile-menu-link">Contact</a>
-        </div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hbg" aria-hidden="true">AI</div>
+  <div class="w">
+    <div class="hgrid">
+
+      <div class="hcol">
+        <div class="hey a1">AI &amp; Data Specialist</div>
+        <h1 class="hname a2">Fulvio<br>Cuppi</h1>
+        <p class="hstmt a3">
+        <strong>AI & Data Systems.
+        </p>
+        <hr class="hdiv a4" aria-hidden="true">
+        <p class="hstack a5">
+          <span class="lbl">[ Stack ]</span>
+          LoRA Fine-tuning &nbsp;·&nbsp;
+          Gaussian Splatting &nbsp;·&nbsp;
+          COLMAP &nbsp;·&nbsp;
+          Blender &nbsp;·&nbsp;
+          Python &nbsp;·&nbsp;
+          SQL &nbsp;·&nbsp;
+          BigQuery &nbsp;·&nbsp;
+          Tableau &nbsp;·&nbsp;
+          PowerBI
+        </p>
+      </div>
+
+      <div class="hphoto-wrap a2">
+        <img
+          src="2025-07-28 14.37.32.jpg"
+          alt="Fulvio Cuppi"
+          class="hphoto"
+          loading="eager"
+        >
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="w">
+
+    <div class="sh rv">
+      <span class="sn">01</span>
+      <h2 class="st">Selected Case Studies</h2>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="gradient-bg min-h-screen flex items-center justify-center text-white">
-        <div class="max-w-6xl mx-auto px-4 py-20">
-            <div class="flex flex-col lg:flex-row items-center justify-between">
-                <div class="lg:w-1/2 text-center lg:text-left mb-10 lg:mb-0">
-                    <h1 class="text-5xl lg:text-6xl font-bold mb-4 fade-in">
-                        Fulvio Cuppi
-                    </h1>
-                    <h2 class="text-2xl lg:text-3xl mb-6 text-blue-200 fade-in">
-                        Data Analyst & Cultural Expert
-                    </h2>
-                    <p class="text-lg mb-8 text-gray-100 fade-in">
-                        Trasformo dati in insights significativi, combinando competenze analitiche con una solida formazione culturale e artistica.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-in">
-                        <a href="#contact" class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
-                            Contattami
-                        </a>
-                        <a href="#thesis" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition">
-                            Vedi Tesi
-                        </a>
-                    </div>
-                </div>
-                <div class="lg:w-1/2 flex justify-center">
-                    <div class="relative">
-                        <img src="2025-07-28 14.37.32.jpg" alt="Fulvio Cuppi" class="w-80 h-80 rounded-full object-cover border-8 border-white/20 shadow-2xl fade-in">
-                    </div>
-                </div>
-            </div>
+    <div class="pgrid">
+
+      <!-- ATI THE ETRUSCAN -->
+      <article class="card rv d1">
+        <div class="cmeta">
+          <span class="ctype">Generative AI System</span>
+          <span class="cyr">2025</span>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 fade-in">Chi Sono</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto fade-in">
-                    Un professionista versatile con una formazione unica che combina arte, tecnologia e analisi dati
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="fade-in">
-                    <h3 class="text-2xl font-bold mb-6">Il Mio Percorso</h3>
-                    <p class="text-gray-600 mb-4">
-                        Laureato magistrale in Arti con specializzazione in Museologia e Curatela, ho sviluppato una passione per l'analisi dei dati durante la stesura della mia tesi, utilizzando i dati come strumento per interpretare fenomeni culturali.
-                    </p>
-                    <p class="text-gray-600 mb-4">
-                        La mia formazione accademica mi ha fornito solide basi in storia dell'arte, linguaggi visivi e tecniche di produzione artistica e cinematografica. Ho anche sviluppato competenze nella produzione di musica elettronica.
-                    </p>
-                    <p class="text-gray-600">
-                        Attualmente sto approfondendo le mie competenze in Data Analytics attraverso corsi specializzati e progetti pratici, combinando creatività e analisi per creare soluzioni innovative.
-                    </p>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-6 fade-in">
-                    <div class="bg-blue-50 p-6 rounded-lg text-center card-hover">
-                        <i class="fas fa-graduation-cap text-3xl text-blue-600 mb-4"></i>
-                        <h4 class="font-bold mb-2">Formazione</h4>
-                        <p class="text-sm text-gray-600">Master Degree in Visual Arts + Bachelor's Degree in Arts & Drama Studies</p>
-                    </div>
-                    <div class="bg-green-50 p-6 rounded-lg text-center card-hover">
-                        <i class="fas fa-chart-bar text-3xl text-green-600 mb-4"></i>
-                        <h4 class="font-bold mb-2">Data Analytics</h4>
-                        <p class="text-sm text-gray-600">Boolean Academy</p>
-                    </div>
-                    <div class="bg-purple-50 p-6 rounded-lg text-center card-hover">
-                        <i class="fas fa-music text-3xl text-purple-600 mb-4"></i>
-                        <h4 class="font-bold mb-2">Sound Engineer</h4>
-                        <p class="text-sm text-gray-600">Fonoprint</p>
-                    </div>
-                    <div class="bg-orange-50 p-6 rounded-lg text-center card-hover">
-                        <i class="fas fa-mountain text-3xl text-orange-600 mb-4"></i>
-                        <h4 class="font-bold mb-2">Nature Guide</h4>
-                        <p class="text-sm text-gray-600">GAE - ER Licensed</p>
-                    </div>
-                </div>
-            </div>
+        <h3 class="ctitle">Ati the Etruscan</h3>
+        <p class="csub">LoRA fine-tuning pipeline for historically-grounded AI image generation</p>
+        <div class="cdiv" aria-hidden="true"></div>
+        <ul class="cfocus">
+          <li>LoRA model fine-tuning on a structured dataset of controlled Blender renders — lighting, camera angle, and texture variation systematically parameterised for training stability</li>
+          <li>Dataset engineering pipeline: UV mapping consistency, image-space normalisation, and metadata structuring to ensure domain specificity at model conditioning level</li>
+          <li>Philological coherence enforced at dataset construction — visual identity grounded in documented Etruscan material culture, eliminating anachronistic stylistic drift</li>
+          <li>Iterative prompt-conditioning workflow for tightly bounded generative output within a controlled visual domain</li>
+        </ul>
+        <span class="media-label">Process overview</span>
+        <div class="video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/n1Wv_nc7QjE?start=34"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            title="Ati the Etruscan — generative AI process overview">
+          </iframe>
         </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="py-20 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 fade-in">Esperienza</h2>
-                <p class="text-gray-600 fade-in">Il mio percorso professionale nel mondo culturale e dell'analisi dati</p>
-            </div>
-            
-            <div class="relative">
-                <!-- Timeline line -->
-                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-blue-200"></div>
-                
-                <!-- Experience items -->
-                <div class="space-y-12">
-                    <!-- Advanced School Computer Graphics -->
-                    <div class="flex flex-col lg:flex-row items-center fade-in">
-                        <div class="lg:w-1/2 lg:pr-8 mb-4 lg:mb-0">
-                            <div class="bg-white p-6 rounded-lg shadow-lg card-hover">
-                                <div class="flex items-center mb-4">
-                                    <div class="bg-indigo-600 text-white p-2 rounded-full mr-4">
-                                        <i class="fas fa-cube"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold">Advanced School of Computer Graphics and AI for Cultural Heritage and Science</h3>
-                                        <p class="text-gray-600">CINECA - Consiglio Nazionale delle Ricerche </p>
-                                        <p class="text-sm text-indigo-600">10/2025</p>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600">
-                                    Corso intensivo su grafica 3D, AI e visualizzazione dati per beni culturali e scienza. Tecniche di modellazione 3D, fotogrammetria, realtà virtuale e applicazioni innovative per comunicazione scientifica e culturale.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="lg:w-1/2 lg:pl-8">
-                            <div class="w-4 h-4 bg-indigo-600 rounded-full mx-auto lg:mx-0"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Data Analytics Course -->
-                    <div class="flex flex-col lg:flex-row-reverse items-center fade-in">
-                        <div class="lg:w-1/2 lg:pl-8 mb-4 lg:mb-0">
-                            <div class="bg-white p-6 rounded-lg shadow-lg card-hover">
-                                <div class="flex items-center mb-4">
-                                    <div class="bg-blue-600 text-white p-2 rounded-full mr-4">
-                                        <i class="fas fa-chart-line"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold">Data Analytics Course</h3>
-                                        <p class="text-gray-600">Boolean Academy</p>
-                                        <p class="text-sm text-blue-600">2025</p>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600">
-                                    Corso intensivo in Data Analytics con focus su Python, SQL, PowerBI e Tableau per l'analisi e visualizzazione dei dati.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="lg:w-1/2 lg:pr-8 flex justify-center lg:justify-end">
-                            <div class="w-4 h-4 bg-blue-600 rounded-full"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Museum Guide MAST -->
-                    <div class="flex flex-col lg:flex-row items-center fade-in">
-                        <div class="lg:w-1/2 lg:pr-8 mb-4 lg:mb-0">
-                            <div class="bg-white p-6 rounded-lg shadow-lg card-hover">
-                                <div class="flex items-center mb-4">
-                                    <div class="bg-purple-600 text-white p-2 rounded-full mr-4">
-                                        <i class="fas fa-camera"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold">Museum Tour Guide</h3>
-                                        <p class="text-gray-600">Fondazione MAST</p>
-                                        <p class="text-sm text-purple-600">10/2023 - 12/2023</p>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600">
-                                    Guida per l'esibizione "Foto/Industria 23 GAME", biennale di fotografia. Supporto educativo e interpretativo per i visitatori.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="lg:w-1/2 lg:pl-8">
-                            <div class="w-4 h-4 bg-purple-600 rounded-full mx-auto lg:mx-0"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Museum Guide Palazzo -->
-                    <div class="flex flex-col lg:flex-row-reverse items-center fade-in">
-                        <div class="lg:w-1/2 lg:pl-8 mb-4 lg:mb-0">
-                            <div class="bg-white p-6 rounded-lg shadow-lg card-hover">
-                                <div class="flex items-center mb-4">
-                                    <div class="bg-green-600 text-white p-2 rounded-full mr-4">
-                                        <i class="fas fa-palette"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold">Museum Tour Guide</h3>
-                                        <p class="text-gray-600">Palazzo D'Accursio</p>
-                                        <p class="text-sm text-green-600">11/2022 - 02/2023</p>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600">
-                                    Guida per l'esibizione "Norma Mascellani (1909–2009). Secrets from the Twentieth Century". Collaborazione con team curatoriale.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="lg:w-1/2 lg:pr-8 flex justify-center lg:justify-end">
-                            <div class="w-4 h-4 bg-green-600 rounded-full"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="ctags">
+          <span class="tag">LoRA Fine-tuning</span>
+          <span class="tag">Dataset Engineering</span>
+          <span class="tag">Blender Rendering</span>
+          <span class="tag">Stable Diffusion</span>
+          <span class="tag">Texture Preparation</span>
         </div>
-    </section>
+      </article>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 fade-in">Competenze</h2>
-                <p class="text-gray-600 fade-in">Le mie competenze tecniche e linguistiche</p>
-            </div>
-            
-            <div class="grid lg:grid-cols-2 gap-12">
-                <!-- Technical Skills -->
-                <div class="fade-in">
-                    <h3 class="text-2xl font-bold mb-8 text-center">Competenze Tecniche</h3>
-                    <div class="grid grid-cols-1 gap-4">
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
-                            <div class="flex items-center">
-                                <i class="fab fa-python text-2xl text-blue-600 mr-4"></i>
-                                <span class="font-semibold text-lg">Python</span>
-                            </div>
-                            <div class="skill-check">
-                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
-                            <div class="flex items-center">
-                                <i class="fas fa-database text-2xl text-orange-600 mr-4"></i>
-                                <span class="font-semibold text-lg">SQL</span>
-                            </div>
-                            <div class="skill-check">
-                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
-                            <div class="flex items-center">
-                                <i class="fas fa-file-excel text-2xl text-green-600 mr-4"></i>
-                                <span class="font-semibold text-lg">Excel</span>
-                            </div>
-                            <div class="skill-check">
-                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
-                            <div class="flex items-center">
-                                <i class="fas fa-chart-bar text-2xl text-blue-500 mr-4"></i>
-                                <span class="font-semibold text-lg">Tableau</span>
-                            </div>
-                            <div class="skill-check">
-                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
-                            <div class="flex items-center">
-                                <i class="fas fa-chart-line text-2xl text-yellow-600 mr-4"></i>
-                                <span class="font-semibold text-lg">PowerBI</span>
-                            </div>
-                            <div class="skill-check">
-                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
-                            <div class="flex items-center">
-                                <i class="fas fa-palette text-2xl text-purple-600 mr-4"></i>
-                                <span class="font-semibold text-lg">Adobe Creative Suite</span>
-                            </div>
-                            <div class="skill-check">
-                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
-                            <div class="flex items-center">
-                                <i class="fas fa-cube text-2xl text-indigo-600 mr-4"></i>
-                                <span class="font-semibold text-lg">Blender 3D</span>
-                            </div>
-                            <div class="skill-check">
-                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
-                            <div class="flex items-center">
-                                <i class="fas fa-camera text-2xl text-teal-600 mr-4"></i>
-                                <span class="font-semibold text-lg">Metashape (Fotogrammetria)</span>
-                            </div>
-                            <div class="skill-check">
-                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg card-hover">
-                            <div class="flex items-center">
-                                <i class="fas fa-project-diagram text-2xl text-cyan-600 mr-4"></i>
-                                <span class="font-semibold text-lg">ParaView</span>
-                            </div>
-                            <div class="skill-check">
-                                <i class="fas fa-check-circle text-2xl text-green-600"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Languages -->
-                <div class="fade-in">
-                    <h3 class="text-2xl font-bold mb-8 text-center">Lingue</h3>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="bg-blue-50 p-6 rounded-lg text-center card-hover">
-                            <i class="fas fa-flag text-3xl text-blue-600 mb-4"></i>
-                            <h4 class="font-bold mb-2">Italiano</h4>
-                            <p class="text-sm text-gray-600">Madrelingua</p>
-                        </div>
-                        <div class="bg-red-50 p-6 rounded-lg text-center card-hover">
-                            <i class="fas fa-flag text-3xl text-red-600 mb-4"></i>
-                            <h4 class="font-bold mb-2">Inglese</h4>
-                            <p class="text-sm text-gray-600">Fluente</p>
-                        </div>
-                        <div class="bg-blue-50 p-6 rounded-lg text-center card-hover">
-                            <i class="fas fa-flag text-3xl text-blue-600 mb-4"></i>
-                            <h4 class="font-bold mb-2">Francese</h4>
-                            <p class="text-sm text-gray-600">Avanzato</p>
-                        </div>
-                        <div class="bg-yellow-50 p-6 rounded-lg text-center card-hover">
-                            <i class="fas fa-flag text-3xl text-yellow-600 mb-4"></i>
-                            <h4 class="font-bold mb-2">Spagnolo</h4>
-                            <p class="text-sm text-gray-600">Avanzato</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- BOLOGNA DIGITAL TWIN -->
+      <article class="card rv d2">
+        <div class="cmeta">
+          <span class="ctype">Spatial Reconstruction Pipeline</span>
+          <span class="cyr">2025</span>
         </div>
-    </section>
-
-    <!-- Thesis Section -->
-    <section id="thesis" class="py-20 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 fade-in">La Mia Tesi</h2>
-                <p class="text-gray-600 fade-in">Ricerca sui mercati di arte digitale</p>
-            </div>
-            
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white rounded-lg shadow-xl overflow-hidden card-hover fade-in">
-                    <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-8 text-white">
-                        <div class="flex items-center justify-center mb-6">
-                            <i class="fas fa-coins text-6xl"></i>
-                        </div>
-                        <h3 class="text-3xl font-bold text-center mb-4">
-                            The Rise of The NFT Marketplace: SuperRare and Foundation
-                        </h3>
-                        <p class="text-center text-blue-100 text-lg">
-                            Una mappatura completa di due mercati di arte digitale
-                        </p>
-                    </div>
-                    
-                    <div class="p-8">
-                        <div class="grid md:grid-cols-2 gap-8 mb-8">
-                            <div>
-                                <h4 class="text-xl font-bold mb-4 text-gray-800">Obiettivi della Ricerca</h4>
-                                <ul class="space-y-2 text-gray-600">
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
-                                        Analisi comparativa dei marketplace SuperRare e Foundation
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
-                                        Studio dei pattern di vendita e pricing degli NFT
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
-                                        Mappatura degli artisti e delle tendenze emergenti
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
-                                        Impatto culturale dell'arte digitale nel mercato contemporaneo
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <div>
-                                <h4 class="text-xl font-bold mb-4 text-gray-800">Metodologia</h4>
-                                <ul class="space-y-2 text-gray-600">
-                                    <li class="flex items-start">
-                                        <i class="fas fa-link text-blue-600 mr-2 mt-1"></i>
-                                        Estrazione dei dati dalla blockchain
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-chart-bar text-blue-600 mr-2 mt-1"></i>
-                                        Analisi quantitativa dei dati di vendita
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-search text-blue-600 mr-2 mt-1"></i>
-                                        Ricerca qualitativa sui trend artistici
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-users text-blue-600 mr-2 mt-1"></i>
-                                        Studio del comportamento dei collezionisti
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-sitemap text-blue-600 mr-2 mt-1"></i>
-                                        Mappatura dei marketplaces
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-gray-50 p-6 rounded-lg mb-8">
-                            <h4 class="text-xl font-bold mb-3 text-gray-800">Risultati Chiave</h4>
-                            <p class="text-gray-600 mb-4">
-                                La ricerca ha evidenziato come i marketplace NFT abbiano rivoluzionato il mercato dell'arte contemporanea, 
-                                creando nuove dinamiche di valore e accessibilità per artisti digitali emergenti. L'analisi dei dati ha 
-                                rivelato pattern interessanti nelle preferenze dei collezionisti e nell'evoluzione dei prezzi.
-                            </p>
-                            <p class="text-gray-600">
-                                Questo studio rappresenta un ponte perfetto tra la mia formazione artistica e le competenze in data analytics, 
-                                dimostrando come l'analisi dei dati possa fornire insights preziosi nel settore culturale.
-                            </p>
-                        </div>
-                        
-                        <div class="text-center">
-                            <a href="https://www.academia.edu/98737937/The_Rise_of_The_NFT_Marketplace_SuperRare_and_Foundation?source=swp_share" 
-                               target="_blank" 
-                               class="inline-flex items-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                Leggi la Tesi Completa su Academia.edu
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <h3 class="ctitle">Bologna Digital Twin</h3>
+        <p class="csub">Environmental reconstruction pipeline for urban spatial data with heterogeneous source inputs</p>
+        <div class="cdiv" aria-hidden="true"></div>
+        <ul class="cfocus">
+          <li>Multi-source data integration: photogrammetric capture, municipal tree census data, and procedural geometry aligned into a coherent georeferenced spatial model</li>
+          <li>Species-accurate vegetation pipeline — 3D models sourced, cleaned, and placed via systematic logic derived from census attributes, not manual authoring</li>
+          <li>Gaussian Splatting reconstruction via COLMAP-derived sparse point clouds; adaptive strategies for occluded zones and spatially incomplete inputs</li>
+          <li>360° camera rig system for Gaussian Splat seed generation with automated FFmpeg frame sequencing</li>
+        </ul>
+        <span class="media-label">Pipeline output</span>
+        <div class="igrid">
+          <img src="digitaltwin_1.png" alt="Bologna Digital Twin — Gaussian Splatting reconstruction output" loading="lazy">
+          <img src="digitaltwin_2.png" alt="Bologna Digital Twin — vegetation pipeline integration" loading="lazy">
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 fade-in">Contatti</h2>
-            </div>
-            
-            <div class="max-w-2xl mx-auto">
-                <!-- Contact Form -->
-                <div class="fade-in">
-                    <form id="contact-form" action="mailto:fulviocuppi@gmail.com" method="post" enctype="text/plain" class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Nome</label>
-                            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Email</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Oggetto</label>
-                            <input type="text" name="oggetto" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Messaggio</label>
-                            <textarea name="messaggio" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105">
-                            Invia Messaggio
-                        </button>
-                    </form>
-                    
-                    <!-- Alternative contact methods -->
-                    <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                        <p class="text-sm text-gray-600 text-center">
-                            <i class="fas fa-info-circle mr-1"></i>
-                            Oppure contattami direttamente via 
-                            <a href="mailto:fulviocuppi@gmail.com" class="text-blue-600 hover:text-blue-800 font-semibold">email</a> 
-                            o 
-                            <a href="https://www.linkedin.com/in/fulvio-cuppi-7835b0352/" target="_blank" class="text-blue-600 hover:text-blue-800 font-semibold">LinkedIn</a>
-                        </p>
-                    </div>
-                    
-                    <!-- Social Links -->
-                    <div class="mt-8 text-center">
-                        <h4 class="font-semibold mb-4">Seguimi sui Social</h4>
-                        <div class="flex justify-center space-x-6">
-                            <a href="https://www.linkedin.com/in/fulvio-cuppi-7835b0352/" 
-                               target="_blank"
-                               class="bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 transition transform hover:scale-110 shadow-lg">
-                                <i class="fab fa-linkedin text-xl"></i>
-                            </a>
-                            <a href="https://www.instagram.com/fulvio_cuppi/" 
-                               target="_blank"
-                               class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-full hover:from-purple-600 hover:to-pink-600 transition transform hover:scale-110 shadow-lg">
-                                <i class="fab fa-instagram text-xl"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="ctags">
+          <span class="tag">Gaussian Splatting</span>
+          <span class="tag">COLMAP</span>
+          <span class="tag">Photogrammetry</span>
+          <span class="tag">Blender</span>
+          <span class="tag">SkySplat</span>
+          <span class="tag">FFmpeg</span>
         </div>
-    </section>
+      </article>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <p>&copy; 2025 Fulvio Cuppi. Tutti i diritti riservati.</p>
-            <p class="text-gray-400 mt-2">Data Analyst | Cultural Expert | Bologna, Italia</p>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <div class="w">
+    <div class="sh rv">
+      <span class="sn">02</span>
+      <h2 class="st">Capabilities</h2>
+    </div>
+    <div class="capgrid">
+      <div class="capitem rv d1">
+        <span class="capn">01</span>
+        <h3 class="capname">Generative AI Systems Design</h3>
+        <p class="capdesc">Architecture and execution of AI training pipelines — from dataset structure to model fine-tuning and output conditioning for domain-specific generation.</p>
+      </div>
+      <div class="capitem rv d2">
+        <span class="capn">02</span>
+        <h3 class="capname">Dataset Preparation &amp; Curation</h3>
+        <p class="capdesc">Structured creation, cleaning, and normalisation of synthetic and real-world datasets for model training and downstream analytical pipelines.</p>
+      </div>
+      <div class="capitem rv d3">
+        <span class="capn">03</span>
+        <h3 class="capname">Spatial Reconstruction Pipelines</h3>
+        <p class="capdesc">Multi-tool integration across photogrammetry, neural 3D rendering, and procedural geometry for data-driven environmental reconstruction at scale.</p>
+      </div>
+      <div class="capitem rv d4">
+        <span class="capn">04</span>
+        <h3 class="capname">Data Visualization &amp; Analytical Systems</h3>
+        <p class="capdesc">Dashboard design, exploratory data analysis, and visualisation systems that communicate complex data with structural clarity and methodological rigour.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKGROUND -->
+<section id="background">
+  <div class="w">
+    <div class="sh rv">
+      <span class="sn">03</span>
+      <h2 class="st">Background</h2>
+    </div>
+
+    <div class="bglayout">
+
+      <!-- Left: static context -->
+      <div class="bgsticky rv">
+        <h3 class="bgctitle">Professional Context</h3>
+        <p class="bgcp">Hybrid profile built on a foundation of applied supercomputing, generative AI engineering, and data analytics — extended by a decade of practice in cultural communication and complex-system mediation.</p>
+        <p class="bgcp">The ability to translate technical systems into human terms is not a soft skill here: it is a deliberate and practised competence.</p>
+
+        <div class="bgedu">
+          <span class="edulbl">Academic</span>
+          <div class="edurow">
+            <div class="edudeg">MA Visual Arts — Museology &amp; Curation</div>
+            <div class="eduinst">Università di Bologna</div>
+          </div>
+          <div class="edurow">
+            <div class="edudeg">BA Cinema &amp; Arts Studies</div>
+            <div class="eduinst">Università di Bologna</div>
+          </div>
         </div>
-    </footer>
+      </div>
 
-    <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+      <!-- Right: layered experience -->
+      <div class="layers rv">
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('-translate-x-full');
-        });
+        <!-- LAYER 1: RESEARCH & COMPUTE -->
+        <div class="layer">
+          <div class="layer-head">
+            <span class="layer-lbl lbl-research">Research &amp; Compute</span>
+            <span class="layer-line"></span>
+          </div>
 
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('-translate-x-full');
-            });
-        });
+          <!-- CINECA HPC — featured -->
+          <div class="expitem feat">
+            <span class="expdate">
+              Feb 2026<br>Aug 2026<br><br>
+              Casalecchio<br>di Reno (BO)
+            </span>
+            <div>
+              <div class="exphpc">HPC Supercomputing · Flagship Experience</div>
+              <div class="exporg">CINECA HPC Visit Lab</div>
+              <div class="exprole vio">Research Internship — Generative Systems on HPC Infrastructure</div>
+              <p class="expdesc" style="margin-bottom:14px;">
+                Internship within CINECA's national HPC infrastructure. Work focused on configuring and running generative AI and spatial reconstruction pipelines on high-performance compute environments.
+              </p>
+              <ul class="expdesc">
+                <li>LoRA fine-tuning on multi-GPU cluster nodes — training jobs configured, submitted via HPC job scheduler, and monitored across GPU-allocated compute partitions</li>
+                <li>Gaussian Splatting pipelines executed on HPC compute nodes for spatial reconstruction from dense photogrammetric datasets; workloads scaled beyond local workstation memory limits</li>
+                <li>Dataset staging, job submission, run monitoring, and output retrieval managed directly on CINECA's national supercomputing infrastructure</li>
+              </ul>
+            </div>
+          </div>
 
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+          <!-- CINECA Advanced School -->
+          <div class="expitem">
+            <span class="expdate">Oct 2025</span>
+            <div>
+              <div class="exporg">CINECA – CNR – Palermo</div>
+              <div class="exprole vio">Advanced School · Computer Graphics &amp; AI for Cultural Heritage</div>
+              <p class="expdesc">Intensive training in 3D graphics, photogrammetry, virtual reality, and AI-driven scientific visualisation. Applied focus on computational pipelines for cultural heritage documentation and research communication.</p>
+            </div>
+          </div>
+        </div>
 
-        // Fade in animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        <!-- LAYER 2: ENGINEERING & DATA -->
+        <div class="layer">
+          <div class="layer-head">
+            <span class="layer-lbl lbl-eng">Engineering &amp; Data</span>
+            <span class="layer-line"></span>
+          </div>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+          <div class="expitem">
+            <span class="expdate">2025</span>
+            <div>
+              <div class="exporg">Boolean Academy</div>
+              <div class="exprole">Data Analytics Training</div>
+              <p class="expdesc">Hands-on training in Python, SQL, Tableau, and PowerBI — applied to exploratory data analysis, dashboard design, and structured reporting workflows.</p>
+            </div>
+          </div>
+        </div>
 
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
+        <!-- LAYER 3: COMMUNICATION & CULTURE -->
+        <div class="layer">
+          <div class="layer-head">
+            <span class="layer-lbl lbl-culture">Communication &amp; Culture</span>
+            <span class="layer-line"></span>
+          </div>
 
-        // Skill checks animation
-        const skillChecks = document.querySelectorAll('.skill-check');
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('animate');
-                    }, index * 200);
-                }
-            });
-        }, observerOptions);
+          <div class="expitem">
+            <span class="expdate">Late 2025</span>
+            <div>
+              <div class="exporg">Fondazione MAST — Bologna</div>
+              <div class="exprole">Exhibition Guide · Foto/Industria 2025 — HOME</div>
+              <p class="expdesc">Mediation of complex conceptual frameworks to diverse public audiences in English and Italian. Consistent practice in translating between specialist and general-audience registers, across dense visual and thematic material.</p>
+            </div>
+          </div>
 
-        skillChecks.forEach(check => {
-            skillObserver.observe(check);
-        });
+          <div class="expitem">
+            <span class="expdate">Late 2023</span>
+            <div>
+              <div class="exporg">Fondazione MAST — Bologna</div>
+              <div class="exprole">Exhibition Guide · Foto/Industria 2023 — GAME</div>
+              <p class="expdesc">Audience mediation for the international photography biennial. Multilingual visitor communication and interpretive support across complex visual and thematic systems.</p>
+            </div>
+          </div>
 
-        // Enhanced form handling
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const nome = formData.get('nome');
-            const email = formData.get('email');
-            const oggetto = formData.get('oggetto');
-            const messaggio = formData.get('messaggio');
-            
-            // Create mailto link with form data
-            const subject = encodeURIComponent(`Portfolio Contact: ${oggetto}`);
-            const body = encodeURIComponent(`Nome: ${nome}\nEmail: ${email}\n\nMessaggio:\n${messaggio}`);
-            const mailtoLink = `mailto:fulviocuppi@gmail.com?subject=${subject}&body=${body}`;
-            
-            // Open email client
-            window.location.href = mailtoLink;
-            
-            // Show success message
-            alert('Il tuo client email si aprirà per inviare il messaggio. Grazie per il contatto!');
-            
-            // Reset form
-            this.reset();
-        });
+          <div class="expitem">
+            <span class="expdate">2022–2023</span>
+            <div>
+              <div class="exporg">Palazzo D'Accursio — Bologna</div>
+              <div class="exprole">Exhibition Guide · Norma Mascellani retrospective</div>
+              <p class="expdesc">Curatorial collaboration and public communication for a retrospective on Italian 20th-century visual culture. Interpretation of specialised art-historical content for general audiences.</p>
+            </div>
+          </div>
+        </div>
 
-        // Add interactive hover effects
-        document.querySelectorAll('.card-hover').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-    </script>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section id="contact">
+  <div class="w">
+    <div class="sh rv">
+      <span class="sn">04</span>
+      <h2 class="st">Contacts</h2>
+    </div>
+    <div class="ctgrid">
+      <div class="ctleft rv">
+        <p>Bologna, Italy.<br>Available for <strong>project-based collaboration</strong> and technical consulting.</p>
+      </div>
+      <div class="ctlinks rv d1">
+        <a href="mailto:fulviocuppi@gmail.com" class="clink">
+          <div class="clicon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div>
+            <span class="cllbl">Email</span>
+            <span class="clval">fulviocuppi@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/fulvio-cuppi-7835b0352/" target="_blank" rel="noopener" class="clink">
+          <div class="clicon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </div>
+          <div>
+            <span class="cllbl">LinkedIn</span>
+            <span class="clval">Fulvio Cuppi</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fw">
+    <span class="fcopy">© 2025 Fulvio Cuppi</span>
+    <span class="ftag">AI &amp; Data Specialist<span class="fdot">·</span>Bologna, Italy</span>
+  </div>
+</footer>
+
+<script>
+/* Nav scroll */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>50),{passive:true});
+
+/* Mobile drawer */
+const btn=document.getElementById('nbtn'),dr=document.getElementById('drawer');
+btn.addEventListener('click',()=>dr.classList.toggle('open'));
+dr.querySelectorAll('.dl').forEach(a=>a.addEventListener('click',()=>dr.classList.remove('open')));
+
+/* Scroll reveal */
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+}),{threshold:.07,rootMargin:'0px 0px -32px 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* Smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const t=document.querySelector(a.getAttribute('href'));
+  if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+}));
+</script>
 </body>
 </html>
