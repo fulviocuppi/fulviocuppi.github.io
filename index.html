@@ -138,8 +138,8 @@ section{position:relative;z-index:1}
 .hphoto-wrap{position:relative}
 .hphoto-wrap::after{
   content:'';position:absolute;
-  bottom:-10px;left:-10px;right:10px;top:10px;
-  border:1px solid rgba(0,212,255,0.42);border-radius:4px;z-index:-1;pointer-events:none;
+  inset:-9px;
+  border:1px solid rgba(0,212,255,0.42);border-radius:6px;z-index:-1;pointer-events:none;
 }
 .hphoto{
   width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;
@@ -183,8 +183,34 @@ section{position:relative;z-index:1}
 
 /* image grid */
 .igrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:28px;margin-top:8px}
-.igrid img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:3px;border:1px solid var(--border);display:block;transition:opacity .3s}
-.igrid img:hover{opacity:.85}
+.igrid img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:3px;border:1px solid var(--border);display:block;transition:opacity .3s,transform .3s;cursor:zoom-in}
+.igrid img:hover{opacity:.9;transform:scale(1.015)}
+
+/* ─── LIGHTBOX ───────────────────────────────────────── */
+.lbox{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(11,15,25,0.96);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  opacity:0;pointer-events:none;
+  transition:opacity .28s ease;
+  cursor:zoom-out;
+}
+.lbox.open{opacity:1;pointer-events:auto}
+.lbox-img{
+  max-width:92vw;max-height:88vh;
+  object-fit:contain;border-radius:4px;
+  border:1px solid rgba(255,255,255,0.08);
+  display:block;cursor:default;
+  transform:scale(0.96);transition:transform .28s ease;
+}
+.lbox.open .lbox-img{transform:scale(1)}
+.lbox-close{
+  position:absolute;top:20px;right:24px;
+  font-family:var(--fmono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;transition:color .2s;background:none;border:none;padding:8px;
+}
+.lbox-close:hover{color:var(--cyan)}
 
 /* tags */
 .ctags{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
@@ -305,8 +331,9 @@ footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-ind
   .nlinks{display:none}.nbtn{display:flex}
   .w,.nw,.fw{padding:0 24px}
   .hbg{display:none}
-  .hgrid{grid-template-columns:1fr;gap:40px}
-  .hphoto-wrap{max-width:140px;order:-1}
+  .hgrid{grid-template-columns:1fr;gap:36px}
+  .hphoto-wrap{max-width:120px;order:-1;margin:0 auto}
+  .hphoto-wrap::after{inset:-7px}
   .pgrid{grid-template-columns:1fr}
   .capgrid{grid-template-columns:1fr}
   .bglayout{grid-template-columns:1fr;gap:44px}
@@ -314,14 +341,26 @@ footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-ind
   .ctgrid{grid-template-columns:1fr;gap:44px}
   #work,#capabilities,#background,#contact{padding:80px 0}
   .sh{margin-bottom:40px}
-  .card{padding:32px}
-  .capitem{padding:36px}
+  .card{padding:28px}
+  .capitem{padding:32px}
   .fw{flex-direction:column;gap:6px;text-align:center}
+  .expitem.feat:hover{padding-left:28px}
 }
 @media(max-width:480px){
-  .hname{font-size:clamp(46px,13vw,68px)}
+  .hname{font-size:clamp(44px,13vw,66px)}
+  .hstmt{font-size:15px}
+  .hstack{font-size:10px}
+  .igrid{grid-template-columns:1fr}
   .expitem,.expitem.feat{grid-template-columns:1fr;gap:6px}
   .expdate{padding-top:0}
+  .card{padding:22px}
+  .capitem{padding:26px}
+  .sec-head,.sh{margin-bottom:32px}
+}
+@media(hover:none){
+  .expitem:hover{padding-left:0}
+  .expitem.feat:hover{padding-left:28px}
+  .igrid img:hover{opacity:1;transform:none}
 }
 </style>
 </head>
@@ -356,10 +395,10 @@ footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-ind
     <div class="hgrid">
 
       <div class="hcol">
-        <div class="hey a1">AI &amp; Data Specialist</div>
+        <div class="hey a1">AI &amp; Data Systems</div>
         <h1 class="hname a2">Fulvio<br>Cuppi</h1>
         <p class="hstmt a3">
-        <strong>AI & Data Systems.
+          <strong>AI & Data Systems.</strong>.
         </p>
         <hr class="hdiv a4" aria-hidden="true">
         <p class="hstack a5">
@@ -671,6 +710,12 @@ footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-ind
   </div>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lbox" id="lbox" role="dialog" aria-modal="true" aria-label="Image fullscreen view">
+  <button class="lbox-close" id="lbox-close" aria-label="Close">✕ &nbsp;Close</button>
+  <img class="lbox-img" id="lbox-img" src="" alt="">
+</div>
+
 <script>
 /* Nav scroll */
 const nav=document.getElementById('nav');
@@ -692,6 +737,15 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',
   const t=document.querySelector(a.getAttribute('href'));
   if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
 }));
+
+/* Lightbox */
+const lbox=document.getElementById('lbox'),lboxImg=document.getElementById('lbox-img');
+const openLbox=src=>{lboxImg.src=src;lbox.classList.add('open');document.body.style.overflow='hidden'};
+const closeLbox=()=>{lbox.classList.remove('open');document.body.style.overflow=''};
+document.querySelectorAll('.igrid img').forEach(img=>img.addEventListener('click',()=>openLbox(img.src)));
+document.getElementById('lbox-close').addEventListener('click',e=>{e.stopPropagation();closeLbox()});
+lbox.addEventListener('click',e=>{if(e.target===lbox)closeLbox()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLbox()});
 </script>
 </body>
 </html>
