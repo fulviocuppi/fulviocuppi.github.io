@@ -332,36 +332,77 @@ footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-ind
   .nlinks{display:none}.nbtn{display:flex}
   .w,.nw,.fw{padding:0 24px}
   .hbg{display:none}
-  .hgrid{grid-template-columns:1fr;gap:36px}
-  .hphoto-wrap{max-width:120px;order:-1;margin:0 auto}
-  .hphoto-wrap::after{inset:-7px}
+
+  /* Hero */
+  #hero{padding:96px 0 64px}
+  .hgrid{grid-template-columns:1fr;gap:30px}
+  .hphoto-wrap{max-width:112px;order:-1;margin:0 auto}
+  .hphoto-wrap::after{inset:-6px}
+  .hstmt{margin-bottom:32px;max-width:100%}
+  .hdiv{margin-bottom:20px}
+
+  /* Sections rhythm */
+  #work{padding:72px 0}
+  #capabilities,#background,#contact{padding:68px 0}
+  .sh{margin-bottom:36px}
+
+  /* Cards */
+  .card{padding:24px}
+  .capitem{padding:28px}
+
+  /* Layout stacks */
   .pgrid{grid-template-columns:1fr}
   .capgrid{grid-template-columns:1fr}
-  .bglayout{grid-template-columns:1fr;gap:44px}
+  .bglayout{grid-template-columns:1fr;gap:40px}
   .bgsticky{position:static}
-  .ctgrid{grid-template-columns:1fr;gap:44px}
-  #work,#capabilities,#background,#contact{padding:80px 0}
-  .sh{margin-bottom:40px}
-  .card{padding:28px}
-  .capitem{padding:32px}
+  .ctgrid{grid-template-columns:1fr;gap:36px}
+
+  /* Exp */
+  .expitem.feat{padding:22px}
+  .expitem.feat:hover{padding-left:22px}
+
   .fw{flex-direction:column;gap:6px;text-align:center}
-  .expitem.feat:hover{padding-left:28px}
 }
+
 @media(max-width:480px){
-  .hname{font-size:clamp(44px,13vw,66px)}
-  .hstmt{font-size:15px}
-  .hstack{font-size:10px}
+  /* Hero */
+  #hero{padding:80px 0 52px}
+  .hname{font-size:clamp(38px,11.5vw,58px)}
+  .hstmt{font-size:14px;line-height:1.63;margin-bottom:26px}
+  .hstack{font-size:10px;line-height:1.85}
+
+  /* Sections rhythm */
+  #work,#capabilities,#background,#contact{padding:56px 0}
+  .sh{margin-bottom:26px}
+
+  /* Cards */
+  .card{padding:18px}
+  .cfocus{gap:11px;margin-bottom:24px}
+  .cfocus li{font-size:12.5px;line-height:1.55}
+  .capitem{padding:22px}
+  .video-wrap{margin-bottom:20px}
+
+  /* Exp */
+  .expitem{grid-template-columns:1fr;gap:3px;padding:20px 0}
+  .expitem.feat{grid-template-columns:1fr;gap:3px;padding:18px}
+  .expitem.feat:hover{padding-left:18px}
+  .expdate{padding-top:0;margin-bottom:4px}
+  .expdesc{font-size:12.5px}
+  .exphpc{font-size:8.5px}
+
+  /* Img grid single col */
   .igrid{grid-template-columns:1fr}
-  .expitem,.expitem.feat{grid-template-columns:1fr;gap:6px}
-  .expdate{padding-top:0}
-  .card{padding:22px}
-  .capitem{padding:26px}
-  .sec-head,.sh{margin-bottom:32px}
+
+  /* Background left col */
+  .bglayout{gap:32px}
+  .ctgrid{gap:28px}
 }
+
 @media(hover:none){
   .expitem:hover{padding-left:0}
-  .expitem.feat:hover{padding-left:28px}
+  .expitem.feat:hover{padding-left:22px}
   .igrid img:hover{opacity:1;transform:none}
+  .clink:hover{transform:none}
 }
 </style>
 </head>
@@ -399,7 +440,7 @@ footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-ind
         <div class="hey a1">AI &amp; Data Specialist</div>
         <h1 class="hname a2">Fulvio<br>Cuppi</h1>
         <p class="hstmt a3">
-        <strong>AI & Data Systems.</strong> 
+          <strong>AI & Data Systems.</strong> 
         </p>
         <hr class="hdiv a4" aria-hidden="true">
         <p class="hstack a5">
@@ -458,7 +499,7 @@ footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-ind
         <span class="media-label">Process overview</span>
         <div class="video-wrap">
           <iframe
-            src="https://www.youtube.com/embed/n1Wv_nc7QjE"
+            src="https://www.youtube.com/embed/n1Wv_nc7QjE?start=34"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
@@ -602,9 +643,9 @@ footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-ind
 
           <!-- CINECA Advanced School -->
           <div class="expitem">
-            <span class="expdate">Oct 2025</span>
+            <span class="expdate">Oct 2025<br><br>Palermo</span>
             <div>
-              <div class="exporg">CINECA – CNR – Palermo</div>
+              <div class="exporg">CINECA – Consiglio Nazionale delle Ricerche</div>
               <div class="exprole vio">Advanced School · Computer Graphics &amp; AI for Cultural Heritage</div>
               <p class="expdesc">Intensive training in 3D graphics, photogrammetry, virtual reality, and AI-driven scientific visualisation. Applied focus on computational pipelines for cultural heritage documentation and research communication.</p>
             </div>
@@ -636,27 +677,27 @@ footer{padding:26px 0;border-top:1px solid var(--border);position:relative;z-ind
           </div>
 
           <div class="expitem">
-            <span class="expdate">Late 2025</span>
+            <span class="expdate">Late 2025<br><br>Bologna</span>
             <div>
-              <div class="exporg">Fondazione MAST — Bologna</div>
+              <div class="exporg">Fondazione MAST</div>
               <div class="exprole lime">Exhibition Guide · Foto/Industria 2025 — HOME</div>
               <p class="expdesc">Mediation of complex conceptual frameworks to diverse public audiences in English and Italian. Consistent practice in translating between specialist and general-audience registers, across dense visual and thematic material.</p>
             </div>
           </div>
 
           <div class="expitem">
-            <span class="expdate">Late 2023</span>
+            <span class="expdate">Late 2023<br><br>Bologna</span>
             <div>
-              <div class="exporg">Fondazione MAST — Bologna</div>
+              <div class="exporg">Fondazione MAST</div>
               <div class="exprole lime">Exhibition Guide · Foto/Industria 2023 — GAME</div>
               <p class="expdesc">Audience mediation for the international photography biennial. Multilingual visitor communication and interpretive support across complex visual and thematic systems.</p>
             </div>
           </div>
 
           <div class="expitem">
-            <span class="expdate">2022–2023</span>
+            <span class="expdate">2022–2023<br><br>Bologna</span>
             <div>
-              <div class="exporg">Palazzo D'Accursio — Bologna</div>
+              <div class="exporg">Palazzo D'Accursio</div>
               <div class="exprole lime">Exhibition Guide · Norma Mascellani retrospective</div>
               <p class="expdesc">Curatorial collaboration and public communication for a retrospective on Italian 20th-century visual culture. Interpretation of specialised art-historical content for general audiences.</p>
             </div>
